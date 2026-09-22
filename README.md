@@ -23,5 +23,5 @@ Conversación completa:
 - *[Ismael Gorocito] — Persona 3*
 Conversación completa:
 
-- *[Martino Recio] — Persona 4*
+- *[Martino Recio] — Persona 4(Loop interactivo, menú de configuración, intervenciones y reporte final)*
 Conversación completa:
