@@ -4,6 +4,7 @@
  */
 package simuladorecosistema;
 
+import java.util.Random;
 /**
  *
  * @author Educacion
@@ -19,20 +20,19 @@ public class Planta extends Entidad implements Reproducible {
     @Override
     public void actuar(Ecosistema eco) {
         if (isViva()) {
-            envejecer();
             intentarReproduccion(eco);
         }
     }
 
     @Override
     public void mostrarEstado() {
-        System.out.println("Planta: " + getNombre() + " | Tamaño: " + tamanio + " | Energía: " + getEnergia());
+        System.out.println("Planta: " + getNombre() + " | Tamanio: " + tamanio + " | Energia: " + getEnergia());
     }
 
     public double serComida() {
         double valorNutritivo = this.tamanio * 10.0;
         setEnergia(0);
-        setViva(false); // muere al ser comida
+        setViva(false);
         return valorNutritivo;
     }
 
@@ -43,9 +43,20 @@ public class Planta extends Entidad implements Reproducible {
 
     @Override
     public void reproducirse(Ecosistema eco) {
-        setEnergia(getEnergia() - 15);
-        System.out.println(getNombre() + " se reprodujo y soltó un nuevo brote.");
-        // eco.agregarEntidad(new Planta(getNombre() + "-Brote", 20, 1));
+        double multClima = eco.getClimaActual().getMultiplicadorReproduccionPlantas();
+        
+        // En Invierno el multiplicador es 0: no se reproducen
+        if (multClima <= 0.0) {
+            return;
+        }
+
+        // Probabilidad según clima (Sequía = 50%, Soleado/Lluvioso = casi seguro)
+        Random r = new Random();
+        if (r.nextDouble() <= (multClima * 0.6)) {
+            setEnergia(getEnergia() - 15);
+            System.out.println(getNombre() + " se reprodujo y solto un nuevo brote.");
+            eco.agregarEntidad("planta", 35.0);
+        }
     }
 
     public int getTamanio() {

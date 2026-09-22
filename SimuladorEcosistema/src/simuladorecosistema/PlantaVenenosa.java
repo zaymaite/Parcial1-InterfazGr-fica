@@ -8,7 +8,7 @@ package simuladorecosistema;
  *
  * @author Educacion
  */
-public class PlantaVenenosa extends Planta {
+public class PlantaVenenosa extends Planta implements Peligroso {
 
     public PlantaVenenosa(String nombre, double energia, int tamanio) {
         super(nombre, energia, tamanio);
@@ -18,12 +18,18 @@ public class PlantaVenenosa extends Planta {
     public double serComida() {
         setEnergia(0);
         setViva(false);
-        System.out.println("¡" + getNombre() + " era venenosa!");
-        return -30.0; // resta energia en vez de sumar
+        System.out.println("CUIDADO: " + getNombre() + " era venenosa!");
+        return -30.0; // Resta 30 de energía al conejo que la coma
     }
-    
+
     @Override
     public void mostrarEstado() {
-        System.out.println("Planta Venenosa: " + getNombre() + " | Tamaño: " + getTamanio() + " | Energía: " + getEnergia());
+        System.out.println("Planta Venenosa: " + getNombre() + " | Tamanio: " + getTamanio() + " | Energia: " + getEnergia());
+    }
+
+    @Override
+    public int getNivelPeligro() {
+        // Nivel fijo de peligro representativo para el reporte
+        return 15;
     }
 }

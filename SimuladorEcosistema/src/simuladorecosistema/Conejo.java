@@ -4,6 +4,8 @@
  */
 package simuladorecosistema;
 
+import java.util.Random;
+
 /**
  *
  * @author Educacion
@@ -17,62 +19,55 @@ public class Conejo extends Animal implements Reproducible {
     @Override
     public void actuar(Ecosistema eco) {
         if (isViva()) {
-            envejecer();
             moverse();
             comer(eco);
             intentarReproduccion(eco);
-            verificarMuerte(); //acá se usa el default de la interfaz
+            verificarMuerte();
         }
     }
 
     @Override
     public void comer(Ecosistema eco) {
         boolean encontroComida = false;
-        
-        /* CUANDO ISMA TERMINE ECOSISTEMA, SE DESCOMENTA ESTO:
+
         for (Planta p : eco.getPlantas()) {
             if (p.isViva()) {
                 double nutrientes = p.serComida();
                 setEnergia(getEnergia() + nutrientes);
-                System.out.println(getNombre() + " comió a " + p.getNombre() + " (+" + nutrientes + " energia)");
+                System.out.println(getNombre() + " comio a " + p.getNombre() + " (" + (nutrientes >= 0 ? "+" : "") + nutrientes + " energia)");
                 encontroComida = true;
                 break;
             }
         }
-        */
 
         if (!encontroComida) {
-            setEnergia(getEnergia() - 15); // penalidad
-            System.out.println(getNombre() + " no encontró comida (-15 energia).");
+            setEnergia(getEnergia() - 15);
+            System.out.println(getNombre() + " no encontro comida (-15 energia).");
         }
     }
 
     @Override
     public void mostrarEstado() {
         String alerta = (getEnergia() < 20) ? " [PELIGRO]" : "";
-        System.out.println("Conejo: " + getNombre() + " | Energía: " + getEnergia() + alerta);
+        System.out.println("Conejo: " + getNombre() + " | Energia: " + getEnergia() + alerta);
     }
 
     @Override
     public boolean puedeReproducirse() {
-        boolean hayOtroConejo = false;
-        
-        /* CUANDO ISMA TERMINE ECOSISTEMA, SE DESCOMENTA ESTO:
-        for (Conejo c : eco.getConejos()) {
-            if (c.isViva() && !c.equals(this)) {
-                hayOtroConejo = true;
-                break;
-            }
-        }
-        */
-        
-        return isViva() && getEnergia() > 60 && hayOtroConejo;
+        return isViva() && getEnergia() > 60;
     }
 
     @Override
     public void reproducirse(Ecosistema eco) {
-        setEnergia(getEnergia() - 25);
-        System.out.println(getNombre() + " tuvo una cría.");
-        // eco.agregarEntidad(new Conejo(getNombre() + "-Cria", 30, getVelocidad(), 1.5));
+        long conejosVivos = eco.getConejos().stream().filter(Entidad::isViva).count();
+        // Solo reproduce si hay pareja y con una probabilidad del 50% para evitar explosión demográfica
+        if (conejosVivos >= 2) {
+            Random r = new Random();
+            if (r.nextDouble() < 0.5) {
+                setEnergia(getEnergia() - 25);
+                eco.agregarEntidad("conejo", 40.0);
+                System.out.println(getNombre() + " se reprodujo y nacio un nuevo conejo.");
+            }
+        }
     }
 }
