@@ -6,8 +6,48 @@ package simuladorecosistema;
 
 /**
  *
- * @author Usuario
+ * @author Educacion
  */
-public class Animal {
-    
+public abstract class Animal extends Entidad implements Mortal {
+    private int velocidad;
+    private double peso;
+
+    public Animal(String nombre, double energia, int velocidad, double peso) {
+        super(nombre, energia);
+        this.velocidad = velocidad;
+        this.peso = peso;
+    }
+
+    @Override
+    public boolean estaVivo() {
+        return isViva();
+    }
+
+    @Override
+    public void morir() {
+        setViva(false);
+        setEnergia(0);
+    }
+
+    public abstract void comer(Ecosistema eco);
+
+    public void moverse() {
+        System.out.println(getNombre() + " se desplazó.");
+    }
+
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
 }
