@@ -21,7 +21,7 @@ Conversación completa:
 Conversación completa:
 
 - *[Ismael Gorocito] — Persona 3*
-Conversación completa: Persona 3 (implementacion de las clases lobo, ecosistema e interfaz peligroso)
+Conversación completa: Persona 3 (-implementacion de las clases lobo, ecosistema e interfaz peligroso-)
 
 - *[Martino Recio] — Persona 4(Loop interactivo, menú de configuración, intervenciones y reporte final)*
 Conversación completa:
