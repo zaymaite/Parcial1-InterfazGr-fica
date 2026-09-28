@@ -79,3 +79,6 @@ Conversación completa: https://chatgpt.com/share/6ab9ccef-46c0-83e9-9234-a2eae3
 
 - *[Martino Recio]*
 Conversación completa: https://share.gemini.google/j66ctnUDSd1P
+
+# Link del video
+https://drive.google.com/file/d/1XqtY-RKrW1qgPAI8oHoBMj8hoPCnkeIK/view?usp=drivesdk
