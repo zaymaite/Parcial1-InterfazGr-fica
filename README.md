@@ -16,7 +16,9 @@ Primera instancia evaluativa de Interfaz Gráfica.
 - Turnos: 10
 - Clima Inicial: SOLEADO
 
-- 5. Presionar ENTER para avanzar entre cada turno o utilizar el menú numérico de intervención cuando el sistema lo solicite.
+- 5. Presionar ENTER para avanzar secuencialmente entre cada turno.
+
+- 6. Al finalizar el Turno 3, se desplegará automáticamente el Menú de Intervención en consola: seleccionar la opción 1 para cambiar el clima o 2 para agregar una nueva entidad, confirmando la acción para observar su impacto en los turnos siguientes.
   
 # Estructura del proyecto
 Parcial1-InterfazGr-fica/
@@ -61,7 +63,9 @@ Parcial1-InterfazGr-fica/
   
 - **Ismael Gorocito:** El mayor desafío fue desarrollar la clase central Ecosistema en paralelo con la lógica de depredación (Lobo y la jerarquía de entidades Peligroso). Como mis compañeros dependían de las listas del ecosistema para programar sus seres vivos, subí primero una estructura base a Git para no bloquear su trabajo. A nivel de código, el reto principal fue lograr que los lobos cazaran y eliminaran conejos sin generar errores de concurrencia al modificar las listas mientras el sistema las estaba recorriendo en cada turno. Lo resolví usando iteradores seguros (o listas de bajas temporales) para separar la búsqueda de presas de su eliminación, logrando una simulación estable.
 
-- **Martino Recio:**
+- **Martino Recio:** Uno de los principales problemas que tuve fue organizar bien el funcionamiento del programa y hacer que todo se coordinara correctamente con los turnos y las distintas entidades. Como estaba trabajando principalmente con la clase SimuladorEcosistema, tenía que encargarme de la entrada de datos, de avanzar los turnos y de mostrar el menú de intervención cada tres turnos. Para hacer esto dependía también de cómo estaban implementadas las clases Ecosistema, Conejo y Lobo por parte de mis compañeros.
+
+Cuando empezamos a probar todo junto, vimos que había un problema con el equilibrio de la simulación, ya que las plantas se terminaban muy rápido, generalmente en el turno 1 o 2. Esto hacía que no pudiéramos llegar al turno 3 para probar el menú de intervención. Revisando el funcionamiento, encontramos que no se estaban generando nuevos brotes cuando las plantas se reproducían y que también había una llamada que se hacía de más al momento de comprobar si las presas habían muerto.
   
 # Documentación de uso de IA
 - *[Yazmin Riquelme]*
@@ -74,4 +78,4 @@ Conversación completa: https://share.gemini.google/13LGl97w3Vyk
 Conversación completa: https://chatgpt.com/share/6ab9ccef-46c0-83e9-9234-a2eae3a146de?ogimg=plain
 
 - *[Martino Recio]*
-Conversación completa:
+Conversación completa: https://share.gemini.google/j66ctnUDSd1P
