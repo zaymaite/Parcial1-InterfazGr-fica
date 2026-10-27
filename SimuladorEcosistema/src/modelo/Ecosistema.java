@@ -3,12 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package simuladorecosistema;
+package modelo;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Ecosistema {
+// ... el resto del código sigue igual
     private ArrayList<Planta> plantas;
     private ArrayList<Conejo> conejos;
     private ArrayList<Lobo> lobos;
