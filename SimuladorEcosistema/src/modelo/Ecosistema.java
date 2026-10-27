@@ -5,7 +5,7 @@
 
 
 //Creado por el isma
-package simuladorecosistema;
+package modelo;
 import java.util.ArrayList;
 
 public class Ecosistema {
