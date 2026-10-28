@@ -309,14 +309,48 @@ public class PanelSimulacion extends javax.swing.JPanel {
 
     private void btnCambiarClimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarClimaActionPerformed
         // TODO add your handling code here:
+        
+        if (controlador == null) return;
+        String[] climas = {"SOLEADO", "LLUVIOSO", "SEQUIA", "INVIERNO"};
+        String seleccion = (String) javax.swing.JOptionPane.showInputDialog(
+                this, 
+                "Selecciona el nuevo clima:", 
+                "Cambiar Clima", 
+                javax.swing.JOptionPane.QUESTION_MESSAGE, 
+                null, 
+                climas, 
+                climas[0]
+        );
+        if (seleccion != null) {
+            controlador.aplicarCambioClima(seleccion);
+        }
     }//GEN-LAST:event_btnCambiarClimaActionPerformed
 
     private void btnAgregarEntidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEntidadActionPerformed
         // TODO add your handling code here:
+        
+        if (controlador == null) return;
+        String[] opciones = {"planta", "conejo", "lobo"};
+        String seleccion = (String) javax.swing.JOptionPane.showInputDialog(
+                this, 
+                "¿Qué entidad deseas agregar?", 
+                "Agregar Entidad", 
+                javax.swing.JOptionPane.QUESTION_MESSAGE, 
+                null, 
+                opciones, 
+                opciones[0]
+        );
+        if (seleccion != null) {
+            controlador.aplicarAgregarEntidad(seleccion);
+        }
     }//GEN-LAST:event_btnAgregarEntidadActionPerformed
 
     private void btnAvanzarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvanzarTurnoActionPerformed
         // TODO add your handling code here:
+        
+        if (controlador != null) {
+            controlador.avanzarTurno();
+        }
     }//GEN-LAST:event_btnAvanzarTurnoActionPerformed
 
     public void actualizarEstado(int turno, int totalTurnos, String clima, int plantas, int conejos, int lobos) {
@@ -366,6 +400,16 @@ public class PanelSimulacion extends javax.swing.JPanel {
         lblEstadoSimulacion.setText("En curso");
         lblSubtitulo.setText(subtitulo);
     }
+    
+    
+    
+    private controlador.ControladorPrincipal controlador;
+
+    public void setControlador(controlador.ControladorPrincipal controlador) {
+        this.controlador = controlador;
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarEntidad;
     private javax.swing.JButton btnAvanzarTurno;

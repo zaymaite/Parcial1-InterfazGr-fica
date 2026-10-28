@@ -25,8 +25,8 @@ public class Planta extends Entidad implements Reproducible {
     }
 
     @Override
-    public void mostrarEstado() {
-        System.out.println("Planta: " + getNombre() + " | Tamanio: " + tamanio + " | Energia: " + getEnergia());
+    public String obtenerEstado() {
+        return "Planta: " + getNombre() + " | Tamaño: " + tamanio + " | Energía: " + getEnergia();
     }
 
     public double serComida() {
@@ -45,16 +45,14 @@ public class Planta extends Entidad implements Reproducible {
     public void reproducirse(Ecosistema eco) {
         double multClima = eco.getClimaActual().getMultiplicadorReproduccionPlantas();
         
-        // En Invierno el multiplicador es 0: no se reproducen
         if (multClima <= 0.0) {
             return;
         }
 
-        // Probabilidad según clima (Sequía = 50%, Soleado/Lluvioso = casi seguro)
         Random r = new Random();
         if (r.nextDouble() <= (multClima * 0.6)) {
             setEnergia(getEnergia() - 15);
-            System.out.println(getNombre() + " se reprodujo y solto un nuevo brote.");
+            eco.registrarEvento(getNombre() + " soltó un nuevo brote.");
             eco.agregarEntidad("planta", 35.0);
         }
     }

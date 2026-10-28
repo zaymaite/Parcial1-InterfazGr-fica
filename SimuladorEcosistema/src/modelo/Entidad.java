@@ -9,29 +9,29 @@ package modelo;
  * @author Educacion
  */
 public abstract class Entidad {
-    private static final double energiaBasePorTurno= 1.0; /*ver si mueren muy rápido o muy lento*/
+    private static final double ENERGIA_BASE_POR_TURNO = 1.0;
     
     private String nombre;
     private double energia;
     private int edad;
     private boolean viva;
     
-    public Entidad (String nombre, double energia) {
+    public Entidad(String nombre, double energia) {
         this.nombre = nombre;
-        setEnergia(energia); //acá se valida con set
+        setEnergia(energia);
         this.edad = 0;
         this.viva = true;
     }
     
     public abstract void actuar(Ecosistema eco);
-    public abstract void mostrarEstado();
+    public abstract String obtenerEstado();
     
     public void envejecer() {
         this.edad++;
-        setEnergia(this.energia - energiaBasePorTurno);
+        setEnergia(this.energia - ENERGIA_BASE_POR_TURNO);
     }
     
-    public String getNombre(){
+    public String getNombre() {
         return nombre;
     }
     
@@ -39,7 +39,7 @@ public abstract class Entidad {
         this.nombre = nombre;
     }
     
-    public double getEnergia(){
+    public double getEnergia() {
         return energia;
     }
     
@@ -47,17 +47,17 @@ public abstract class Entidad {
         this.energia = Math.max(0, nuevaEnergia);
     }
     
-    public int getEdad(){
+    public int getEdad() {
         return edad;
     }
     
     public void setEdad(int edad) {
-        if(edad >= 0){
+        if (edad >= 0) {
             this.edad = edad;
         }
     }
     
-    public boolean isViva(){
+    public boolean isViva() {
         return viva;
     }
     

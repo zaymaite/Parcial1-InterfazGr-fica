@@ -4,6 +4,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public VentanaPrincipal() {
         initComponents();
+        
+        this.controlador = new controlador.ControladorPrincipal(this);
+        
+        this.panelSimulacion.setControlador(this.controlador);
+        
         habilitarReporte(false);
     }
 
@@ -32,7 +37,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simulador de Ecosistema");
         setMinimumSize(new java.awt.Dimension(900, 650));
-        setPreferredSize(new java.awt.Dimension(1024, 768));
 
         panelCabecera.setBackground(new java.awt.Color(255, 255, 255));
         panelCabecera.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 24, 12, 24));
@@ -81,6 +85,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         menuSimulacion.setText("Simulación");
         menuSimulacion.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        menuSimulacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSimulacionActionPerformed(evt);
+            }
+        });
 
         itemNuevaSimulacion.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         itemNuevaSimulacion.setText("Nueva Simulación");
@@ -113,6 +122,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         menuReportes.setText("Reportes");
         menuReportes.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        menuReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuReportesActionPerformed(evt);
+            }
+        });
 
         itemVerReporte.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         itemVerReporte.setText("Ver Reporte");
@@ -132,16 +146,33 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemNuevaSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevaSimulacionActionPerformed
+        mostrarConfiguracion();
     }//GEN-LAST:event_itemNuevaSimulacionActionPerformed
-
+  
+   
     private void itemGuardarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarPartidaActionPerformed
+        if (controlador != null) {
+            controlador.guardarPartida();
+        }
     }//GEN-LAST:event_itemGuardarPartidaActionPerformed
 
     private void itemCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCargarPartidaActionPerformed
+        if (controlador != null) {
+            controlador.cargarPartida();
+        }
     }//GEN-LAST:event_itemCargarPartidaActionPerformed
 
     private void itemVerReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVerReporteActionPerformed
+        mostrarReporte();
     }//GEN-LAST:event_itemVerReporteActionPerformed
+
+    private void menuSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSimulacionActionPerformed
+        // TODO add your handling code here: 
+    }//GEN-LAST:event_menuSimulacionActionPerformed
+
+    private void menuReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReportesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuReportesActionPerformed
 
     public void mostrarConfiguracion() {
         pestanias.setSelectedComponent(panelConfiguracion);
@@ -196,7 +227,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public PanelReporte getPanelReporte() {
         return panelReporte;
     }
-
+    
+    
+    private controlador.ControladorPrincipal controlador;
+    
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(() -> {
+            new VentanaPrincipal().setVisible(true);
+        });
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem itemCargarPartida;

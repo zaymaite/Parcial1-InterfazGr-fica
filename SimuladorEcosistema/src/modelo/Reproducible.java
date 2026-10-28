@@ -10,11 +10,10 @@ package modelo;
  */
 public interface Reproducible {
     boolean puedeReproducirse();
-    
     void reproducirse(Ecosistema eco);
     
-    default void intentarReproduccion(Ecosistema eco){
-        if(puedeReproducirse()){
+    default void intentarReproduccion(Ecosistema eco) {
+        if (puedeReproducirse()) {
             reproducirse(eco);
         }
     }

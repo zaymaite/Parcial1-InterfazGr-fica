@@ -31,8 +31,8 @@ public abstract class Animal extends Entidad implements Mortal {
 
     public abstract void comer(Ecosistema eco);
 
-    public void moverse() {
-        System.out.println(getNombre() + " se desplazó.");
+    public void moverse(Ecosistema eco) {
+        eco.registrarEvento(getNombre() + " se desplazó por el terreno.");
     }
 
     public int getVelocidad() {

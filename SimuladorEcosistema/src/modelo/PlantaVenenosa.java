@@ -18,18 +18,16 @@ public class PlantaVenenosa extends Planta implements Peligroso {
     public double serComida() {
         setEnergia(0);
         setViva(false);
-        System.out.println("CUIDADO: " + getNombre() + " era venenosa!");
-        return -30.0; // Resta 30 de energía al conejo que la coma
+        return -30.0; // Resta energía
     }
 
     @Override
-    public void mostrarEstado() {
-        System.out.println("Planta Venenosa: " + getNombre() + " | Tamanio: " + getTamanio() + " | Energia: " + getEnergia());
+    public String obtenerEstado() {
+        return "Planta Venenosa: " + getNombre() + " | Tamaño: " + getTamanio() + " | Energía: " + getEnergia();
     }
 
     @Override
     public int getNivelPeligro() {
-        // Nivel fijo de peligro representativo para el reporte
         return 15;
     }
 }

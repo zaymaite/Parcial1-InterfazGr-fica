@@ -19,7 +19,7 @@ public class Conejo extends Animal implements Reproducible {
     @Override
     public void actuar(Ecosistema eco) {
         if (isViva()) {
-            moverse();
+            moverse(eco);
             comer(eco);
             intentarReproduccion(eco);
             verificarMuerte();
@@ -34,7 +34,12 @@ public class Conejo extends Animal implements Reproducible {
             if (p.isViva()) {
                 double nutrientes = p.serComida();
                 setEnergia(getEnergia() + nutrientes);
-                System.out.println(getNombre() + " comio a " + p.getNombre() + " (" + (nutrientes >= 0 ? "+" : "") + nutrientes + " energia)");
+                
+                if (nutrientes < 0) {
+                    eco.registrarEvento("¡CUIDADO! " + getNombre() + " comió a " + p.getNombre() + " que era venenosa (-30 energía).");
+                } else {
+                    eco.registrarEvento(getNombre() + " comió a " + p.getNombre() + " (+" + nutrientes + " energía).");
+                }
                 encontroComida = true;
                 break;
             }
@@ -42,14 +47,14 @@ public class Conejo extends Animal implements Reproducible {
 
         if (!encontroComida) {
             setEnergia(getEnergia() - 15);
-            System.out.println(getNombre() + " no encontro comida (-15 energia).");
+            eco.registrarEvento(getNombre() + " no encontró comida (-15 energía).");
         }
     }
 
     @Override
-    public void mostrarEstado() {
+    public String obtenerEstado() {
         String alerta = (getEnergia() < 20) ? " [PELIGRO]" : "";
-        System.out.println("Conejo: " + getNombre() + " | Energia: " + getEnergia() + alerta);
+        return "Conejo: " + getNombre() + " | Energía: " + getEnergia() + alerta;
     }
 
     @Override
@@ -60,13 +65,12 @@ public class Conejo extends Animal implements Reproducible {
     @Override
     public void reproducirse(Ecosistema eco) {
         long conejosVivos = eco.getConejos().stream().filter(Entidad::isViva).count();
-        // Solo reproduce si hay pareja y con una probabilidad del 50% para evitar explosión demográfica
         if (conejosVivos >= 2) {
             Random r = new Random();
             if (r.nextDouble() < 0.5) {
                 setEnergia(getEnergia() - 25);
+                eco.registrarEvento(getNombre() + " se reprodujo y nació un nuevo conejo.");
                 eco.agregarEntidad("conejo", 40.0);
-                System.out.println(getNombre() + " se reprodujo y nacio un nuevo conejo.");
             }
         }
     }

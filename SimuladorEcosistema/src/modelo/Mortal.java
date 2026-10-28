@@ -12,13 +12,12 @@ public interface Mortal {
     boolean estaVivo();
     void morir();
     
-    double getEnergia();//Se hereda de entidad
+    double getEnergia();
     String getNombre();
     
-    default void verificarMuerte(){
-        if(getEnergia() <= 0){
+    default void verificarMuerte() {
+        if (getEnergia() <= 0) {
             morir();
-            System.out.println(getNombre() + " murió por falta de energía");
         }
     }
 }
