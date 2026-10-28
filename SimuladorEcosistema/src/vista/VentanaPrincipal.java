@@ -236,11 +236,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     private controlador.ControladorPrincipal controlador;
     
-    public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(() -> {
-            new VentanaPrincipal().setVisible(true);
-        });
-    }
+    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
