@@ -7,6 +7,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         this.controlador = new controlador.ControladorPrincipal(this);
         
+        this.panelConfiguracion.setControlador(this.controlador);
         this.panelSimulacion.setControlador(this.controlador);
         
         habilitarReporte(false);
@@ -43,6 +44,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelCabecera.setLayout(new java.awt.BorderLayout());
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/logo32.png"))); // NOI18N
+        lblTitulo.setIconTextGap(12);
         lblTitulo.setForeground(new java.awt.Color(23, 37, 56));
         lblTitulo.setText("Simulador de Ecosistema");
         panelCabecera.add(lblTitulo, java.awt.BorderLayout.LINE_START);
@@ -56,9 +59,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         pestanias.setBackground(new java.awt.Color(255, 255, 255));
         pestanias.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        pestanias.addTab("Configuración", panelConfiguracion);
-        pestanias.addTab("Simulación", panelSimulacion);
-        pestanias.addTab("Reporte", panelReporte);
+        pestanias.addTab("Configuración", new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/configuracion16.png")), panelConfiguracion); // NOI18N
+        pestanias.addTab("Simulación", new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/simulacion16.png")), panelSimulacion); // NOI18N
+        pestanias.addTab("Reporte", new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/reporte16.png")), panelReporte); // NOI18N
 
         getContentPane().add(pestanias, java.awt.BorderLayout.CENTER);
 
@@ -85,6 +88,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         menuSimulacion.setText("Simulación");
         menuSimulacion.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        menuSimulacion.setBorder(javax.swing.BorderFactory.createEmptyBorder(7, 80, 7, 56));
         menuSimulacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuSimulacionActionPerformed(evt);
@@ -122,6 +126,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         menuReportes.setText("Reportes");
         menuReportes.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        menuReportes.setBorder(javax.swing.BorderFactory.createEmptyBorder(7, 59, 7, 51));
         menuReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuReportesActionPerformed(evt);
