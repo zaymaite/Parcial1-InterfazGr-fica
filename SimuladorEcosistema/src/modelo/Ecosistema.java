@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -232,6 +232,23 @@ public class Ecosistema {
                 .sorted(Comparator.comparingInt(Peligroso::getNivelPeligro).reversed())
                 .forEach(pel -> lista.add("Nivel " + pel.getNivelPeligro() + " -> " + ((Entidad) pel).getNombre()));
         return lista;
+    }
+    
+    
+    private int entidadesIniciales = 0;
+    
+    
+    public int getEntidadesIniciales(){
+        
+        return entidadesIniciales;
+        
+    }
+    
+    
+    public void setEntidadesIniciales(int entidadesIniciales){
+        
+        this.entidadesIniciales = entidadesIniciales;
+    
     }
     
 }

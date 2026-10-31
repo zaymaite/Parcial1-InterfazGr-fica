@@ -14,6 +14,7 @@ import modelo.Entidad;
 import modelo.Lobo;
 import modelo.Planta;
 import modelo.PlantaVenenosa;
+import vista.PanelReporte;
 import vista.VentanaPrincipal;
 
 /**
@@ -84,6 +85,9 @@ public class ControladorPrincipal {
         // Creación del ecosistema
         this.modelo = new Ecosistema(climaSeleccionado, turnos);
 
+        // Registro de la cantidad inicial para el balance demográfico del reporte
+        this.modelo.setEntidadesIniciales(plantas + conejos + lobos);
+
         for (int i = 0; i < plantas; i++) {
             this.modelo.agregarEntidad("planta", 40.0);
         }
@@ -145,6 +149,35 @@ public class ControladorPrincipal {
         vista.getPanelSimulacion().habilitarIntervencion(false, "Simulación finalizada");
         vista.setIdentificador("SIMULACIÓN FINALIZADA");
         vista.setEstado("Fin de la simulación: " + modelo.obtenerCausaFin());
+
+        // ==========================================
+        // Llenar el panel de reporte (Integración Yazmin)
+        // ==========================================
+        PanelReporte reporte = vista.getPanelReporte();
+
+        int nacP = modelo.getTotalNacimientosPlantas();
+        int nacC = modelo.getTotalNacimientosConejos();
+        int nacL = modelo.getTotalNacimientosLobos();
+        int mueP = modelo.getTotalMuertesPlantas();
+        int mueC = modelo.getTotalMuertesConejos();
+        int mueL = modelo.getTotalMuertesLobos();
+        int vivas = modelo.getPlantas().size() + modelo.getConejos().size() + modelo.getLobos().size();
+        int nacimientos = nacP + nacC + nacL;
+        int muertes = mueP + mueC + mueL;
+
+        // Si el modelo tiene la cantidad inicial registrada se usa directamente;
+        // de lo contrario, se calcula por retrocompatibilidad.
+        int iniciales = (modelo.getEntidadesIniciales() > 0)
+                ? modelo.getEntidadesIniciales()
+                : (vivas + muertes - nacimientos);
+
+        reporte.mostrarEncabezado(modelo.obtenerCausaFin(), modelo.getTurnoActual(), modelo.getMaxTurnos());
+        reporte.mostrarDestacados(modelo.getTurnoMayorActividad(), modelo.getMaxEventosEnUnTurno(),
+                modelo.getPlantaMasLongeva(), modelo.getConejoMasLongevo(),
+                modelo.getLoboMasLongevo(), modelo.getLoboConMasCacerias());
+        reporte.mostrarNacimientos(nacP, nacC, nacL);
+        reporte.mostrarMuertes(mueP, mueC, mueL);
+        reporte.mostrarBalance(iniciales, nacimientos, muertes, vivas);
 
         if (modelo.ecosistemaColapsado()) {
             vista.mostrarError("¡Alerta! El ecosistema ha colapsado.\n" + modelo.obtenerCausaFin());
