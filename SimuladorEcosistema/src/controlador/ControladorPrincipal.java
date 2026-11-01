@@ -10,17 +10,12 @@ import java.util.List;
 import modelo.Clima;
 import modelo.Conejo;
 import modelo.Ecosistema;
-import modelo.Entidad;
 import modelo.Lobo;
 import modelo.Planta;
 import modelo.PlantaVenenosa;
 import vista.PanelReporte;
 import vista.VentanaPrincipal;
 
-/**
- *
- * @author Paulo
- */
 public class ControladorPrincipal {
 
     private Ecosistema modelo;
@@ -151,7 +146,7 @@ public class ControladorPrincipal {
         vista.setEstado("Fin de la simulación: " + modelo.obtenerCausaFin());
 
         // ==========================================
-        // Llenar el panel de reporte (Integración Yazmin)
+        // Llenar el panel de reporte
         // ==========================================
         PanelReporte reporte = vista.getPanelReporte();
 
