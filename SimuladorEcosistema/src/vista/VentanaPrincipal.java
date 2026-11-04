@@ -214,11 +214,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuSimulacion.setText("Simulación");
         menuSimulacion.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         menuSimulacion.setBorder(javax.swing.BorderFactory.createEmptyBorder(7, 80, 7, 56));
-        menuSimulacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuSimulacionActionPerformed(evt);
-            }
-        });
 
         itemNuevaSimulacion.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         itemNuevaSimulacion.setText("Nueva Simulación");
@@ -252,11 +247,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuReportes.setText("Reportes");
         menuReportes.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         menuReportes.setBorder(javax.swing.BorderFactory.createEmptyBorder(7, 59, 7, 51));
-        menuReportes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuReportesActionPerformed(evt);
-            }
-        });
 
         itemVerReporte.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         itemVerReporte.setText("Ver Reporte");
@@ -307,14 +297,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void btnSeccionReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeccionReporteActionPerformed
         mostrarReporte();
     }//GEN-LAST:event_btnSeccionReporteActionPerformed
-
-    private void menuSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSimulacionActionPerformed
-        // TODO add your handling code here: 
-    }//GEN-LAST:event_menuSimulacionActionPerformed
-
-    private void menuReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReportesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuReportesActionPerformed
 
     public void mostrarConfiguracion() {
         mostrarSeccion("configuracion", btnSeccionConfiguracion);
