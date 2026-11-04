@@ -27,16 +27,24 @@ public class ControladorPrincipal {
         this.dao = new SimulacionDAO();
     }
 
-    // ---------------------------------------
+    // --------------------------------------
     //  Inicio y validación de configuración
-    // ---------------------------------------
+    // --------------------------------------
     public void iniciarNuevaSimulacion(String strPlantas, String strConejos, String strLobos, String strTurnos, String strClima) {
+        // Confirmación si ya hay simulación en curso
+        if (modelo != null && !modelo.simulaciónFinalizada()) {
+            boolean reemplazar = vista.confirmar("Hay una simulación en curso, ¿querés reemplazarla?");
+            if (!reemplazar) {
+                return;
+            }
+        }
+
         // Validación de campos vacíos
         if (strPlantas == null || strPlantas.trim().isEmpty()
                 || strConejos == null || strConejos.trim().isEmpty()
                 || strLobos == null || strLobos.trim().isEmpty()
                 || strTurnos == null || strTurnos.trim().isEmpty()) {
-            vista.mostrarError("Hay que completar todos los campos he.");
+            vista.mostrarError("Todos los campos son obligatorios.");
             return;
         }
 
@@ -79,8 +87,6 @@ public class ControladorPrincipal {
 
         // Creación del ecosistema
         this.modelo = new Ecosistema(climaSeleccionado, turnos);
-
-        // Registro de la cantidad inicial para el balance demográfico del reporte
         this.modelo.setEntidadesIniciales(plantas + conejos + lobos);
 
         for (int i = 0; i < plantas; i++) {
@@ -94,7 +100,7 @@ public class ControladorPrincipal {
         }
 
         // Actualizar interfaz e iniciar simulación
-        vista.setIdentificador("Simulacion en ejecución");
+        vista.setIdentificador("Simulación en ejecución");
         vista.setEstado("Simulación configurada exitosamente.");
         vista.getPanelSimulacion().mostrarEnCurso("Simulación activa: " + turnos + " turnos planificados.");
         vista.habilitarReporte(false);
@@ -113,25 +119,19 @@ public class ControladorPrincipal {
             return;
         }
 
-        // Procesar turno en el modelo
         modelo.procesarTurno();
-
-        // Actualizar datos en la vista
         actualizarVistaSimulacion();
 
-        // Verificar si la simulación terminó por límite o por colapso
         if (modelo.simulaciónFinalizada()) {
             finalizarSimulacion();
             return;
         }
 
-        // Chequear si corresponde habilitar el panel de intervención (cada 3 turnos)
         verificarIntervencion();
     }
 
     private void verificarIntervencion() {
         int turno = modelo.getTurnoActual();
-        // Se puede intervenir cada 3 turnos (ej: turno 3, 6, 9...)
         if (turno % 3 == 0) {
             vista.getPanelSimulacion().habilitarIntervencion(true, "¡Intervención disponible en este turno!");
         } else {
@@ -145,9 +145,6 @@ public class ControladorPrincipal {
         vista.setIdentificador("SIMULACIÓN FINALIZADA");
         vista.setEstado("Fin de la simulación: " + modelo.obtenerCausaFin());
 
-        // -----------------------------
-        //  Llenar el panel de reporte
-        // -----------------------------
         PanelReporte reporte = vista.getPanelReporte();
 
         int nacP = modelo.getTotalNacimientosPlantas();
@@ -160,13 +157,17 @@ public class ControladorPrincipal {
         int nacimientos = nacP + nacC + nacL;
         int muertes = mueP + mueC + mueL;
 
-        // Si el modelo tiene la cantidad inicial registrada se usa directamente;
-        // de lo contrario, se calcula por retrocompatibilidad.
         int iniciales = (modelo.getEntidadesIniciales() > 0)
                 ? modelo.getEntidadesIniciales()
                 : (vivas + muertes - nacimientos);
 
-        reporte.mostrarEncabezado(modelo.obtenerCausaFin(), modelo.getTurnoActual(), modelo.getMaxTurnos());
+        // Ajuste para evitar "turno 11 de 10"
+        int turnoFin = Math.min(modelo.getTurnoActual(), modelo.getMaxTurnos());
+        if (modelo.ecosistemaColapsado()) {
+            turnoFin = modelo.getTurnoActual();
+        }
+
+        reporte.mostrarEncabezado(modelo.obtenerCausaFin(), turnoFin, modelo.getMaxTurnos());
         reporte.mostrarDestacados(modelo.getTurnoMayorActividad(), modelo.getMaxEventosEnUnTurno(),
                 modelo.getPlantaMasLongeva(), modelo.getConejoMasLongevo(),
                 modelo.getLoboMasLongevo(), modelo.getLoboConMasCacerias());
@@ -180,12 +181,11 @@ public class ControladorPrincipal {
             vista.mostrarMensaje("Simulación completada con éxito tras alcanzar el límite de turnos.");
         }
 
-        // Habilitar la pestaña del reporte final
         vista.habilitarReporte(true);
     }
 
     // --------------------------
-    //  Intervencion del jugador
+    //  Intervención del jugador
     // --------------------------
     public void aplicarCambioClima(String strNuevoClima) {
         if (modelo == null || modelo.simulaciónFinalizada()) {
@@ -210,7 +210,7 @@ public class ControladorPrincipal {
 
         tipo = tipo.trim().toLowerCase();
         if (tipo.equals("lobo") && modelo.getTotalNacimientosLobos() >= 5) {
-            vista.mostrarError("No se pueden agregar más de 5 lobos en total en la simulación, vas a matar a todos los conejos.");
+            vista.mostrarError("No se pueden agregar más de 5 lobos en total en la simulación.");
             return;
         }
 
@@ -221,9 +221,9 @@ public class ControladorPrincipal {
         vista.mostrarMensaje("Se agregó un(a) " + tipo + " con éxito.");
     }
 
-    // --------------------------------------
-    //  Coordinacion de datos hacia la vista
-    // --------------------------------------
+    // ---------------------------------------
+    //  Coordinación de datos hacia la vista
+    // ---------------------------------------
     private void actualizarVistaSimulacion() {
         int turno = modelo.getTurnoActual();
         int maxTurnos = modelo.getMaxTurnos();
@@ -232,13 +232,9 @@ public class ControladorPrincipal {
         int conejos = modelo.getConejos().size();
         int lobos = modelo.getLobos().size();
 
-        // 1. Actualizar contadores
         vista.getPanelSimulacion().actualizarEstado(turno, maxTurnos, clima, plantas, conejos, lobos);
-
-        // 2. Cargar eventos del turno
         vista.getPanelSimulacion().mostrarEventos(modelo.getEventosTurnoActual());
 
-        // 3. Construir lista de filas para la tabla (sin Swing en el controlador)
         List<Object[]> filasTabla = new ArrayList<>();
 
         for (Planta p : modelo.getPlantas()) {
@@ -265,10 +261,8 @@ public class ControladorPrincipal {
         }
 
         List<String> datos = new ArrayList<>();
-        // Cabecera: TurnoActual, MaxTurnos, Clima
         datos.add("ESTADO;" + modelo.getTurnoActual() + ";" + modelo.getMaxTurnos() + ";" + modelo.getClimaActual().name());
 
-        // Guardar cada entidad viva
         for (Planta p : modelo.getPlantas()) {
             String tipo = (p instanceof PlantaVenenosa) ? "PLANTAVENENOSA" : "PLANTA";
             datos.add(tipo + ";" + p.getNombre() + ";" + p.getEnergia() + ";" + p.getEdad() + ";" + p.getTamanio());
@@ -280,11 +274,23 @@ public class ControladorPrincipal {
             datos.add("LOBO;" + l.getNombre() + ";" + l.getEnergia() + ";" + l.getEdad() + ";" + l.getVelocidad() + ";" + l.getPeso() + ";" + l.getExitosCaza());
         }
 
-        dao.guardarEstado(datos);
-        vista.mostrarMensaje("Partida guardada correctamente en partida_simulacion.txt.");
+        boolean guardadoExitoso = dao.guardarEstado(datos);
+        if (guardadoExitoso) {
+            vista.mostrarMensaje("Partida guardada correctamente en partida_simulacion.txt.");
+        } else {
+            vista.mostrarError("No se pudo guardar la partida. Ocurrió un error al escribir el archivo.");
+        }
     }
 
     public void cargarPartida() {
+        // Confirmación si ya hay simulación en curso
+        if (modelo != null && !modelo.simulaciónFinalizada()) {
+            boolean reemplazar = vista.confirmar("Hay una simulación en curso, ¿querés reemplazarla?");
+            if (!reemplazar) {
+                return;
+            }
+        }
+
         List<String> lineas = dao.cargarEstado();
         if (lineas == null || lineas.isEmpty()) {
             vista.mostrarError("No se encontró ningún archivo de partida guardada o el archivo está vacío.");
