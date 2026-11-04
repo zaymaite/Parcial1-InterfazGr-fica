@@ -24,7 +24,7 @@ public class SimulacionDAO {
                 bw.write(linea);
                 bw.newLine();
             }
-            System.out.println("Partida guardada correctamente en " + RUTA_ARCHIVO);
+       
         } catch (IOException e) {
             System.err.println("Error al guardar el archivo: " + e.getMessage());
         }
@@ -38,7 +38,7 @@ public class SimulacionDAO {
             while ((linea = br.readLine()) != null) {
                 datosLeidos.add(linea);
             }
-            System.out.println("Partida cargada correctamente.");
+            
         } catch (IOException e) {
             System.err.println("No se pudo cargar el archivo (quizás no existe aún): " + e.getMessage());
         }

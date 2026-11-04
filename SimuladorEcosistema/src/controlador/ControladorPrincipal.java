@@ -27,16 +27,16 @@ public class ControladorPrincipal {
         this.dao = new SimulacionDAO();
     }
 
-    // =======================================
+    // ---------------------------------------
     //  Inicio y validación de configuración
-    // =======================================
+    // ---------------------------------------
     public void iniciarNuevaSimulacion(String strPlantas, String strConejos, String strLobos, String strTurnos, String strClima) {
         // Validación de campos vacíos
         if (strPlantas == null || strPlantas.trim().isEmpty()
                 || strConejos == null || strConejos.trim().isEmpty()
                 || strLobos == null || strLobos.trim().isEmpty()
                 || strTurnos == null || strTurnos.trim().isEmpty()) {
-            vista.mostrarError("Hay que completar todos los campos che.");
+            vista.mostrarError("Hay que completar todos los campos he.");
             return;
         }
 
@@ -105,9 +105,9 @@ public class ControladorPrincipal {
         vista.mostrarSimulacion();
     }
 
-    // ======================================
+    // --------------------------------------
     //  Avance de turno y control de colapso
-    // ======================================
+    // --------------------------------------
     public void avanzarTurno() {
         if (modelo == null || modelo.simulaciónFinalizada()) {
             return;
@@ -145,9 +145,9 @@ public class ControladorPrincipal {
         vista.setIdentificador("SIMULACIÓN FINALIZADA");
         vista.setEstado("Fin de la simulación: " + modelo.obtenerCausaFin());
 
-        // ==========================================
-        // Llenar el panel de reporte
-        // ==========================================
+        // -----------------------------
+        //  Llenar el panel de reporte
+        // -----------------------------
         PanelReporte reporte = vista.getPanelReporte();
 
         int nacP = modelo.getTotalNacimientosPlantas();
@@ -184,9 +184,9 @@ public class ControladorPrincipal {
         vista.habilitarReporte(true);
     }
 
-    // =============================
+    // --------------------------
     //  Intervencion del jugador
-    // =============================
+    // --------------------------
     public void aplicarCambioClima(String strNuevoClima) {
         if (modelo == null || modelo.simulaciónFinalizada()) {
             return;
@@ -221,9 +221,9 @@ public class ControladorPrincipal {
         vista.mostrarMensaje("Se agregó un(a) " + tipo + " con éxito.");
     }
 
-    // =======================================
+    // --------------------------------------
     //  Coordinacion de datos hacia la vista
-    // =======================================
+    // --------------------------------------
     private void actualizarVistaSimulacion() {
         int turno = modelo.getTurnoActual();
         int maxTurnos = modelo.getMaxTurnos();
@@ -255,9 +255,9 @@ public class ControladorPrincipal {
         vista.getPanelSimulacion().cargarTabla(filasTabla);
     }
 
-    // ==========================
+    // --------------------------
     //  Persistencia con el DAO
-    // ==========================
+    // --------------------------
     public void guardarPartida() {
         if (modelo == null) {
             vista.mostrarError("No hay ninguna simulación activa para guardar.");
