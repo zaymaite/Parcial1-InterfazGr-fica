@@ -83,6 +83,7 @@ Parcial1-InterfazGr-fica/
 Conversación completa: https://share.gemini.google/pEtCKnLqowN9
 
 - *[Yazmin Riquelme]*
+Conversación completa: https://share.gemini.google/EvFIilHCqhjt
 
 - *[Ismael Gorocito]*
 Conversación completa: https://chatgpt.com/share/6ab9ccef-46c0-83e9-9234-a2eae3a146de?ogimg=plain
