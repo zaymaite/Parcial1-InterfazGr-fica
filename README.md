@@ -50,7 +50,7 @@ Parcial1-InterfazGr-fica/
 ```
 
 # Integrantes y roles (segunda instancia)
-- **Hedda Conci:** diseño en Figma y prototipo navegable, VentanaPrincipal (menú, cabecera, pestañas y barra de estado), PanelConfiguracion, ajuste visual de PanelSimulacion y PanelReporte al diseño, iconos.
+- **Hedda Conci:** diseño en Figma y prototipo navegable, VentanaPrincipal (menú, cabecera, pestañas y barra de estado), PanelConfiguracion, iconos.
 - **Yazmin Riquelme:** PanelSimulacion y PanelReporte.
 - **Ismael Gorocito:** SimulacionDAO e integración del ControladorPrincipal con Main.
 - **Martino Recio:** ControladorPrincipal, limpieza del modelo y estadísticas del reporte.
@@ -89,6 +89,7 @@ Conversación completa: https://share.gemini.google/EvFIilHCqhjt
 Conversación completa: https://chatgpt.com/share/6ab9ccef-46c0-83e9-9234-a2eae3a146de?ogimg=plain
 
 - *[Martino Recio]*
+Conversación completa: https://share.gemini.google/MAR9AmnNJvcO
 
 # Link del video (segunda instancia)
 
